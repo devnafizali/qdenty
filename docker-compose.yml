@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: qdenty_postgres
+    environment:
+      POSTGRES_USER: qdenty
+      POSTGRES_PASSWORD: qdenty_secret_2024
+      POSTGRES_DB: qdenty_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - qdenty_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qdenty -d qdenty_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: qdenty_redis
+    command: >
+      redis-server
+      --requirepass qdenty_redis_2024
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save 60 1
+      --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - qdenty_redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "qdenty_redis_2024", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  qdenty_postgres_data:
+  qdenty_redis_data:

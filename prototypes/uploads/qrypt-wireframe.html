@@ -1,0 +1,2692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QRYPT — Wireframe Concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=JetBrains+Mono:wght@300;400;500;600&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --ink-soft: #2a2724;
+    --ink-mute: #6b6660;
+    --paper: #f3efe7;
+    --paper-2: #ebe5da;
+    --paper-3: #e0d8c8;
+    --line: #1a1815;
+    --rule: rgba(15, 14, 12, 0.18);
+    --rule-soft: rgba(15, 14, 12, 0.08);
+    --accent: #c2410c;
+    --accent-2: #1e3a2b;
+    --gold: #8a6d2c;
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --serif-italic: 'Instrument Serif', serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.4;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(194, 65, 12, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(30, 58, 43, 0.04) 0%, transparent 50%);
+  }
+
+  /* Paper grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.09 0 0 0 0 0.07 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .frame { position: relative; z-index: 2; }
+
+  /* WIREFRAME STAMP */
+  .wf-stamp {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 100;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    padding: 6px 12px;
+    background: var(--paper);
+    transform: rotate(2deg);
+  }
+
+  /* TOP UTILITY BAR */
+  .util-bar {
+    border-bottom: 1px solid var(--line);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .util-bar .marquee {
+    display: flex;
+    gap: 32px;
+    overflow: hidden;
+    flex: 1;
+    margin: 0 32px;
+  }
+  .util-bar .marquee span::before { content: '◆'; margin-right: 10px; opacity: 0.5; }
+
+  /* NAVIGATION */
+  nav.primary {
+    border-bottom: 2px solid var(--line);
+    padding: 20px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background: var(--paper);
+  }
+  nav.primary .logo {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+    font-variation-settings: "SOFT" 0, "WONK" 1;
+  }
+  nav.primary .logo sup {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    color: var(--ink-mute);
+    vertical-align: super;
+  }
+  nav.primary ul {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  nav.primary ul a {
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+  }
+  nav.primary ul a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--ink);
+  }
+  nav.primary .nav-right {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  nav.primary .nav-right .sign-in { color: var(--ink); text-decoration: none; }
+  nav.primary .nav-right .cta {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 18px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  nav.primary .nav-right .cta::after { content: '→'; font-family: var(--serif); }
+
+  /* PAGE LABEL */
+  .page-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 32px;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .page-label .dots { display: flex; gap: 4px; }
+  .page-label .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-mute); opacity: 0.3; }
+  .page-label .dot.on { opacity: 1; background: var(--accent); }
+
+  /* SECTION (each "screen") */
+  section.screen {
+    border-bottom: 2px solid var(--line);
+    padding: 64px 32px 80px;
+    position: relative;
+  }
+
+  .screen-tag {
+    position: absolute;
+    top: 24px;
+    left: 32px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .screen-tag b { color: var(--ink); margin-right: 8px; }
+
+  /* ========== HERO ========== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    padding-top: 80px;
+  }
+  .hero .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero .eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--accent); }
+  .hero h1 {
+    font-size: clamp(56px, 7.5vw, 124px);
+    line-height: 0.92;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 144;
+    margin-bottom: 32px;
+  }
+  .hero h1 .it {
+    font-family: var(--serif-italic);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .small {
+    display: block;
+    font-size: 0.45em;
+    letter-spacing: -0.02em;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+  .hero .lede {
+    font-size: 20px;
+    line-height: 1.45;
+    max-width: 540px;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
+  .hero .cta-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 56px;
+  }
+  .btn-pri {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 28px;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-pri::after { content: '→'; font-family: var(--serif); }
+  .btn-sec {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 4px;
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+  }
+  .hero-stats .stat .num {
+    font-family: var(--serif);
+    font-size: 44px;
+    line-height: 1;
+    font-weight: 400;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+  .hero-stats .stat .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 8px;
+  }
+
+  /* Hero right: QR preview card */
+  .hero-card {
+    background: var(--paper-2);
+    border: 1.5px solid var(--line);
+    padding: 36px;
+    position: relative;
+    align-self: start;
+    box-shadow: 8px 8px 0 var(--line);
+  }
+  .hero-card .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .hero-card .card-head .ttl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .hero-card .card-head .badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--accent-2);
+    padding: 3px 8px;
+  }
+  .qr-mock {
+    aspect-ratio: 1;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .qr-grid {
+    position: absolute;
+    inset: 16px;
+    display: grid;
+    grid-template-columns: repeat(21, 1fr);
+    grid-template-rows: repeat(21, 1fr);
+    gap: 1px;
+  }
+  .qr-grid div { background: var(--ink); border-radius: 1px; }
+  .qr-grid div.off { background: transparent; }
+  /* Position detection patterns */
+  .qr-corner {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 6px solid var(--ink);
+    background: var(--paper);
+  }
+  .qr-corner::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    background: var(--ink);
+  }
+  .qr-corner.tl { top: 16px; left: 16px; }
+  .qr-corner.tr { top: 16px; right: 16px; }
+  .qr-corner.bl { bottom: 16px; left: 16px; }
+  .qr-logo {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px; height: 56px;
+    background: var(--paper);
+    display: grid;
+    place-items: center;
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 22px;
+    border: 2px solid var(--ink);
+    font-variation-settings: "SOFT" 0, "WONK" 1;
+  }
+  .hero-card .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .hero-card .meta div { color: var(--ink-mute); }
+  .hero-card .meta div b { display: block; color: var(--ink); margin-bottom: 2px; font-weight: 500; }
+
+  .hero-card .deco {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    font-family: var(--serif-italic);
+    font-style: italic;
+    font-size: 56px;
+    color: var(--accent);
+    transform: rotate(-8deg);
+    line-height: 1;
+  }
+
+  /* ========== USE CASES GRID ========== */
+  .uc-head {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
+    margin-bottom: 56px;
+    align-items: end;
+  }
+  .uc-head h2 {
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 0.95;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    font-variation-settings: "SOFT" 0, "WONK" 0;
+  }
+  .uc-head h2 .it { font-family: var(--serif-italic); font-style: italic; }
+  .uc-head .uc-intro {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 480px;
+  }
+  .uc-head .uc-intro .lbl {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 16px;
+  }
+
+  .uc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1.5px solid var(--line);
+    border-left: 1.5px solid var(--line);
+  }
+  .uc-tile {
+    border-right: 1.5px solid var(--line);
+    border-bottom: 1.5px solid var(--line);
+    padding: 28px 24px 24px;
+    background: var(--paper);
+    cursor: pointer;
+    position: relative;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: background 0.2s;
+  }
+  .uc-tile:hover { background: var(--paper-2); }
+  .uc-tile .num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink-mute);
+  }
+  .uc-tile .ico {
+    margin: 16px 0 20px;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1.5px solid var(--ink);
+  }
+  .uc-tile .ico svg { width: 22px; height: 22px; stroke: var(--ink); fill: none; stroke-width: 1.5; }
+  .uc-tile h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .uc-tile h3 .it { font-family: var(--serif-italic); font-style: italic; font-weight: 400; }
+  .uc-tile p {
+    font-size: 13px;
+    color: var(--ink-mute);
+    line-height: 1.4;
+  }
+  .uc-tile .tier {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .uc-tile .tier.free { color: var(--accent-2); }
+  .uc-tile .tier.pro { color: var(--accent); }
+  .uc-tile .tier.elite { color: var(--gold); }
+
+  /* Featured tile */
+  .uc-tile.feature {
+    background: var(--ink);
+    color: var(--paper);
+    grid-column: span 2;
+  }
+  .uc-tile.feature:hover { background: var(--ink-soft); }
+  .uc-tile.feature .num,
+  .uc-tile.feature p { color: rgba(243, 239, 231, 0.65); }
+  .uc-tile.feature .ico { border-color: var(--paper); }
+  .uc-tile.feature .ico svg { stroke: var(--paper); }
+  .uc-tile.feature h3 { color: var(--paper); font-size: 32px; }
+
+  /* ========== GENERATOR (BUILDER) SCREEN ========== */
+  .builder {
+    display: grid;
+    grid-template-columns: 280px 1fr 360px;
+    gap: 0;
+    border: 1.5px solid var(--line);
+    background: var(--paper);
+    min-height: 720px;
+  }
+  .builder-side {
+    border-right: 1.5px solid var(--line);
+    background: var(--paper-2);
+    padding: 24px 0;
+  }
+  .builder-side .side-ttl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 0 24px 16px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .builder-side ul { list-style: none; padding: 8px 0; }
+  .builder-side li {
+    padding: 12px 24px;
+    font-family: var(--serif);
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 2px solid transparent;
+    cursor: pointer;
+  }
+  .builder-side li:hover { background: var(--paper-3); }
+  .builder-side li.on {
+    background: var(--paper);
+    border-left-color: var(--accent);
+    font-weight: 500;
+  }
+  .builder-side li .lock {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+
+  .builder-main {
+    padding: 40px 48px;
+    border-right: 1.5px solid var(--line);
+  }
+  .builder-main .crumb {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 12px;
+  }
+  .builder-main h2 {
+    font-family: var(--serif);
+    font-size: 44px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+  .builder-main h2 .it { font-family: var(--serif-italic); font-style: italic; }
+  .builder-main .sub {
+    color: var(--ink-mute);
+    font-size: 15px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .form-stack { display: flex; flex-direction: column; gap: 24px; }
+  .field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .field input,
+  .field textarea,
+  .field .input-mock {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--ink);
+    padding: 10px 0;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--ink);
+    outline: none;
+  }
+  .field .input-mock {
+    min-height: 38px;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+  }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .upload-zone {
+    border: 1.5px dashed var(--ink);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--paper-2);
+  }
+  .upload-zone .uz-l {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .upload-zone .uz-l span { display: block; font-family: var(--serif); font-size: 14px; text-transform: none; letter-spacing: 0; color: var(--ink-mute); margin-top: 4px; }
+  .upload-zone .uz-btn {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
+    text-transform: uppercase; border: 1px solid var(--ink);
+    padding: 8px 14px; background: var(--paper);
+  }
+
+  /* Style customizer */
+  .style-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .style-row .swatch {
+    aspect-ratio: 1;
+    border: 1.5px solid var(--ink);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    background: var(--paper);
+    position: relative;
+  }
+  .style-row .swatch.on::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 1.5px solid var(--accent);
+  }
+  .style-row .swatch .qr-mini {
+    width: 70%;
+    height: 70%;
+    background: repeating-linear-gradient(45deg, var(--ink) 0 3px, transparent 3px 6px),
+                repeating-linear-gradient(-45deg, var(--ink) 0 3px, transparent 3px 6px);
+  }
+  .style-row .swatch .qr-dot {
+    width: 60%;
+    height: 60%;
+    background:
+      radial-gradient(circle, var(--ink) 30%, transparent 35%) 0 0/8px 8px;
+  }
+  .style-row .swatch .qr-rd {
+    width: 70%; height: 70%;
+    background: var(--ink);
+    border-radius: 30%;
+    box-shadow:
+      inset 0 0 0 6px var(--paper),
+      inset 0 0 0 8px var(--ink);
+  }
+  .style-row .swatch .qr-square {
+    width: 70%; height: 70%;
+    background: repeating-linear-gradient(90deg, var(--ink) 0 4px, transparent 4px 8px),
+                repeating-linear-gradient(0deg, var(--ink) 0 4px, transparent 4px 8px);
+  }
+  .style-row .swatch.locked { opacity: 0.4; }
+  .style-row .swatch.locked::before {
+    content: '🔒';
+    position: absolute;
+    top: 4px; right: 4px;
+    font-size: 10px;
+  }
+
+  .color-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    align-items: center;
+  }
+  .color-row .c {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--ink);
+    cursor: pointer;
+    position: relative;
+  }
+  .color-row .c.on::after {
+    content: '';
+    position: absolute; inset: -4px;
+    border: 1.5px solid var(--accent);
+  }
+
+  /* Builder right preview */
+  .builder-prev {
+    padding: 40px 32px;
+    background: var(--paper-3);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .builder-prev .prev-ttl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .builder-prev .prev-ttl .live {
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .builder-prev .prev-ttl .live::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .prev-qr {
+    aspect-ratio: 1;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    position: relative;
+    margin-bottom: 24px;
+  }
+
+  .prev-info {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: grid;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    margin-bottom: 24px;
+  }
+  .prev-info div { display: flex; justify-content: space-between; }
+  .prev-info div b { color: var(--ink); font-weight: 500; }
+
+  .prev-actions { display: flex; flex-direction: column; gap: 10px; }
+  .prev-actions .a-pri,
+  .prev-actions .a-sec {
+    text-align: center;
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .prev-actions .a-pri { background: var(--ink); color: var(--paper); }
+  .prev-actions .a-sec { border: 1.5px solid var(--ink); color: var(--ink); }
+  .prev-actions .fmt {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+  .prev-actions .fmt span { padding: 4px 8px; border: 1px solid var(--rule); }
+  .prev-actions .fmt span.on { border-color: var(--ink); color: var(--ink); }
+
+  /* ========== IDENTITY PAGE PREVIEW ========== */
+  .identity-frame {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .identity-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px;
+    border: 1.5px solid var(--line);
+    aspect-ratio: 3/4;
+    position: relative;
+    box-shadow: 12px 12px 0 var(--accent);
+    display: flex;
+    flex-direction: column;
+  }
+  .identity-card .ic-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+  }
+  .identity-card .ic-logo {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    font-variation-settings: "SOFT" 0, "WONK" 1;
+  }
+  .identity-card .ic-logo sup {
+    font-family: var(--mono);
+    font-size: 9px;
+    opacity: 0.6;
+  }
+  .identity-card .ic-verified {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--accent-2);
+    padding: 4px 10px;
+  }
+  .identity-card .ic-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--paper-3);
+    margin-bottom: 20px;
+    background-image: radial-gradient(circle at 50% 40%, var(--paper) 20%, transparent 22%),
+                      radial-gradient(circle at 50% 80%, var(--paper) 35%, transparent 38%);
+  }
+  .identity-card .ic-name {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .identity-card .ic-name .it { font-family: var(--serif-italic); font-style: italic; font-weight: 400; }
+  .identity-card .ic-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(243, 239, 231, 0.6);
+    margin-bottom: auto;
+  }
+  .identity-card .ic-qr {
+    width: 130px; height: 130px;
+    background: var(--paper);
+    margin-top: 32px;
+    position: relative;
+  }
+  .identity-card .ic-foot {
+    margin-top: 16px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(243, 239, 231, 0.5);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .identity-info h2 {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    margin-bottom: 24px;
+  }
+  .identity-info h2 .it { font-family: var(--serif-italic); font-style: italic; }
+  .identity-info .ii-lede {
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 36px;
+    max-width: 540px;
+  }
+  .identity-info .ii-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 40px;
+  }
+  .identity-info .ii-list .row {
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+  }
+  .identity-info .ii-list .row .k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 4px;
+  }
+  .identity-info .ii-list .row .v {
+    font-family: var(--serif);
+    font-size: 18px;
+  }
+  .identity-info .ii-list .row .v.it { font-family: var(--serif-italic); font-style: italic; }
+
+  /* ========== CV BUILDER SCREEN ========== */
+  .cv-frame {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .cv-side h2 {
+    font-family: var(--serif);
+    font-size: 52px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    margin-bottom: 20px;
+  }
+  .cv-side h2 .it { font-family: var(--serif-italic); font-style: italic; }
+  .cv-side p {
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 36px;
+    max-width: 460px;
+  }
+  .cv-templates {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .cv-templates .tmp {
+    aspect-ratio: 3/4;
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    padding: 12px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .cv-templates .tmp.on { box-shadow: 0 0 0 3px var(--accent); }
+  .cv-templates .tmp .tmp-name {
+    position: absolute;
+    bottom: -22px;
+    left: 0;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .cv-templates .tmp .tmp-name b { color: var(--ink); font-weight: 500; }
+  .cv-templates .tmp .ln { height: 4px; background: var(--paper-3); }
+  .cv-templates .tmp .ln.t { height: 8px; background: var(--ink); width: 60%; }
+  .cv-templates .tmp .ln.s { width: 40%; }
+  .cv-templates .tmp .ln.full { width: 100%; }
+  .cv-templates .tmp .row2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .cv-templates .tmp .blk {
+    background: var(--paper-3);
+    aspect-ratio: 1;
+  }
+  .cv-templates .tmp .col { display: flex; flex-direction: column; gap: 4px; }
+  .cv-templates .tmp.locked { opacity: 0.45; }
+  .cv-templates .tmp.locked::after {
+    content: 'PRO';
+    position: absolute;
+    top: 8px; right: 8px;
+    background: var(--gold);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    padding: 2px 5px;
+  }
+
+  /* CV preview document */
+  .cv-doc {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    padding: 48px;
+    box-shadow: 8px 8px 0 var(--line);
+    position: relative;
+    aspect-ratio: 1/1.3;
+  }
+  .cv-doc .cv-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 28px;
+    align-items: center;
+  }
+  .cv-doc .cv-head h3 {
+    font-family: var(--serif);
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .cv-doc .cv-head h3 .it { font-family: var(--serif-italic); font-style: italic; font-weight: 400; }
+  .cv-doc .cv-head .role {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 6px;
+  }
+  .cv-doc .cv-head .qr-mini-doc {
+    width: 64px; height: 64px;
+    background: var(--ink);
+    position: relative;
+  }
+  .cv-doc .cv-head .qr-mini-doc::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    background-image: repeating-linear-gradient(0deg, var(--paper) 0 2px, transparent 2px 4px),
+                      repeating-linear-gradient(90deg, var(--paper) 0 2px, transparent 2px 4px);
+  }
+
+  .cv-doc .cv-body {
+    display: grid;
+    grid-template-columns: 0.7fr 1.5fr;
+    gap: 32px;
+  }
+  .cv-doc .cv-sec {
+    margin-bottom: 20px;
+  }
+  .cv-doc .cv-sec h4 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .cv-doc .cv-sec p { font-size: 12px; line-height: 1.45; color: var(--ink-soft); margin-bottom: 6px; }
+  .cv-doc .cv-sec .ln-mock { height: 6px; background: var(--paper-3); margin-bottom: 6px; border-radius: 1px; }
+  .cv-doc .cv-sec .ln-mock.short { width: 60%; }
+  .cv-doc .cv-sec .ln-mock.medium { width: 80%; }
+  .cv-doc .cv-job {
+    margin-bottom: 16px;
+  }
+  .cv-doc .cv-job .j-h {
+    display: flex; justify-content: space-between;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 2px;
+  }
+  .cv-doc .cv-job .j-h .yr { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); letter-spacing: 0.1em; }
+  .cv-doc .cv-job .j-c {
+    font-family: var(--serif-italic);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+
+  /* ========== PRICING ========== */
+  .pricing-head { text-align: center; margin-bottom: 64px; }
+  .pricing-head .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+  .pricing-head h2 {
+    font-family: var(--serif);
+    font-size: clamp(48px, 6vw, 92px);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .pricing-head h2 .it { font-family: var(--serif-italic); font-style: italic; }
+  .pricing-head p { font-size: 18px; color: var(--ink-soft); max-width: 580px; margin: 0 auto; }
+
+  .billing-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .billing-toggle .tg {
+    display: flex;
+    border: 1.5px solid var(--ink);
+  }
+  .billing-toggle .tg span {
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  .billing-toggle .tg span.on { background: var(--ink); color: var(--paper); }
+  .billing-toggle .save {
+    color: var(--accent);
+    font-family: var(--serif-italic);
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1.5px solid var(--line);
+    border-left: 1.5px solid var(--line);
+  }
+  .price-tier {
+    border-right: 1.5px solid var(--line);
+    border-bottom: 1.5px solid var(--line);
+    padding: 32px 28px;
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .price-tier.featured {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .price-tier.featured .pt-name,
+  .price-tier.featured .pt-desc,
+  .price-tier.featured .feat-list li { color: var(--paper); }
+  .price-tier.featured .pt-desc { color: rgba(243, 239, 231, 0.7); }
+  .price-tier.featured .feat-list li::before { color: var(--accent); }
+  .price-tier.featured .pt-cta { background: var(--accent); }
+
+  .price-tier .pt-tag {
+    position: absolute;
+    top: -1px; right: -1px;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+  }
+  .price-tier .pt-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .price-tier .pt-name .it { font-family: var(--serif-italic); font-style: italic; font-weight: 400; }
+  .price-tier .pt-desc {
+    font-size: 13px;
+    color: var(--ink-mute);
+    line-height: 1.4;
+    margin-bottom: 24px;
+    min-height: 56px;
+  }
+  .price-tier .pt-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 4px;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+  .price-tier .pt-price .amount {
+    font-family: var(--serif);
+    font-size: 56px;
+    line-height: 1;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+  }
+  .price-tier .pt-price .curr {
+    font-family: var(--serif-italic);
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink-mute);
+  }
+  .price-tier .pt-period {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .price-tier .pt-validity {
+    font-family: var(--serif-italic);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .price-tier.featured .pt-validity { color: var(--paper); opacity: 0.8; }
+
+  .feat-list {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 28px;
+  }
+  .feat-list li {
+    font-size: 13px;
+    padding: 8px 0 8px 22px;
+    position: relative;
+    border-bottom: 1px solid var(--rule-soft);
+    line-height: 1.4;
+  }
+  .feat-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: var(--serif);
+    font-weight: 500;
+  }
+  .feat-list li.no::before { content: '—'; color: var(--ink-mute); }
+  .feat-list li b { font-weight: 600; }
+
+  .pt-cta {
+    text-align: center;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .price-tier:not(.featured) .pt-cta:hover { background: var(--accent); }
+
+  /* ========== DASHBOARD ========== */
+  .dash-frame {
+    border: 1.5px solid var(--line);
+    background: var(--paper);
+  }
+  .dash-top {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    padding: 20px 28px;
+    border-bottom: 1.5px solid var(--line);
+    background: var(--paper-2);
+    gap: 24px;
+  }
+  .dash-top .dh-ttl {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 500;
+  }
+  .dash-top .dh-ttl .it { font-family: var(--serif-italic); font-style: italic; font-weight: 400; }
+  .dash-top .dh-search {
+    border: 1px solid var(--rule);
+    padding: 8px 14px;
+    width: 280px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    background: var(--paper);
+    display: flex;
+    justify-content: space-between;
+  }
+  .dash-top .dh-search span:last-child { letter-spacing: 0.1em; }
+  .dash-top .dh-new {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 16px;
+    text-decoration: none;
+  }
+
+  .dash-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1.5px solid var(--line);
+  }
+  .dash-metrics .m {
+    padding: 24px 28px;
+    border-right: 1px solid var(--rule);
+  }
+  .dash-metrics .m:last-child { border-right: none; }
+  .dash-metrics .m .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .dash-metrics .m .val {
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variation-settings: "SOFT" 100, "WONK" 1;
+  }
+  .dash-metrics .m .delta {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent-2);
+    margin-top: 8px;
+  }
+  .dash-metrics .m .delta.dn { color: var(--accent); }
+
+  .dash-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+  .dash-table-wrap {
+    padding: 28px;
+    border-right: 1.5px solid var(--line);
+  }
+  .dash-table-wrap h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .dash-table-wrap h3 .all {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    border-bottom: 1px solid var(--ink-mute);
+  }
+
+  .dash-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--serif);
+  }
+  .dash-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    text-align: left;
+    padding: 12px 8px;
+    border-bottom: 1.5px solid var(--ink);
+    font-weight: 400;
+  }
+  .dash-table td {
+    padding: 14px 8px;
+    border-bottom: 1px solid var(--rule-soft);
+    font-size: 14px;
+    vertical-align: middle;
+  }
+  .dash-table .qr-thumb {
+    width: 32px; height: 32px;
+    background: var(--ink);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    position: relative;
+  }
+  .dash-table .qr-thumb::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background-image: repeating-linear-gradient(90deg, var(--paper) 0 1px, transparent 1px 3px);
+  }
+  .dash-table .type-pill {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    border: 1px solid var(--rule);
+    padding: 3px 7px;
+  }
+  .dash-table .scans {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 500;
+    font-variation-settings: "SOFT" 100;
+  }
+  .dash-table .status {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .dash-table .status.live { color: var(--accent-2); }
+  .dash-table .status.live::before { content: '● '; }
+  .dash-table .status.exp { color: var(--accent); }
+  .dash-table .status.draft { color: var(--ink-mute); }
+
+  .dash-side {
+    padding: 28px;
+  }
+  .dash-side h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  /* Scan activity chart mock */
+  .scan-chart {
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    border-bottom: 1.5px solid var(--ink);
+    border-left: 1.5px solid var(--ink);
+    padding: 4px;
+    margin-bottom: 16px;
+  }
+  .scan-chart .bar {
+    flex: 1;
+    background: var(--ink);
+  }
+
+  .geo-list { list-style: none; }
+  .geo-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: center;
+    font-family: var(--serif);
+    font-size: 14px;
+  }
+  .geo-list li .geo-bar {
+    flex: 1;
+    margin: 0 16px;
+    height: 4px;
+    background: var(--paper-3);
+    position: relative;
+  }
+  .geo-list li .geo-bar::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; height: 100%;
+    background: var(--ink);
+    width: var(--w, 50%);
+  }
+  .geo-list li .pct {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    width: 40px;
+    text-align: right;
+  }
+
+  /* ========== ANNOTATIONS ========== */
+  .annotation {
+    position: absolute;
+    font-family: var(--serif-italic);
+    font-style: italic;
+    color: var(--accent);
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    max-width: 200px;
+    line-height: 1.3;
+    z-index: 5;
+  }
+  .annotation::before {
+    content: '↳';
+    font-style: normal;
+    font-size: 18px;
+    font-family: var(--serif);
+  }
+
+  /* ========== FOOTER ========== */
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 32px 40px;
+    position: relative;
+  }
+  footer .ft-mark {
+    font-family: var(--serif);
+    font-size: clamp(80px, 14vw, 220px);
+    line-height: 0.85;
+    font-weight: 400;
+    letter-spacing: -0.05em;
+    margin-bottom: 64px;
+    font-variation-settings: "SOFT" 0, "WONK" 1;
+  }
+  footer .ft-mark .it { font-family: var(--serif-italic); font-style: italic; }
+  footer .ft-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 40px;
+    border-top: 1px solid rgba(243, 239, 231, 0.2);
+    padding-top: 40px;
+  }
+  footer h5 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(243, 239, 231, 0.5);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+  footer ul { list-style: none; }
+  footer ul li { margin-bottom: 8px; }
+  footer ul a {
+    color: var(--paper);
+    text-decoration: none;
+    font-family: var(--serif);
+    font-size: 15px;
+  }
+  footer .ft-tagline {
+    font-family: var(--serif-italic);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.4;
+    max-width: 340px;
+    color: rgba(243, 239, 231, 0.7);
+    margin-bottom: 20px;
+  }
+  footer .ft-bottom {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(243, 239, 231, 0.2);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(243, 239, 231, 0.5);
+  }
+
+  /* MOBILE */
+  @media (max-width: 980px) {
+    .hero, .uc-head, .identity-frame, .cv-frame, .dash-body { grid-template-columns: 1fr; }
+    .uc-grid, .price-grid { grid-template-columns: repeat(2, 1fr); }
+    .uc-tile.feature { grid-column: span 2; }
+    .dash-metrics { grid-template-columns: repeat(2, 1fr); }
+    .builder { grid-template-columns: 1fr; }
+    .builder-side, .builder-prev { border-right: none; border-bottom: 1.5px solid var(--line); }
+    nav.primary ul { display: none; }
+    footer .ft-grid { grid-template-columns: 1fr 1fr; }
+    .wf-stamp { font-size: 9px; padding: 4px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wf-stamp">Wireframe · v0.1 · Concept</div>
+
+<div class="frame">
+
+  <!-- UTILITY MARQUEE -->
+  <div class="util-bar">
+    <span>EST. 2026</span>
+    <div class="marquee">
+      <span>Generate Without Login</span>
+      <span>Dynamic Identity Codes</span>
+      <span>Privacy-First Architecture</span>
+      <span>Currently in Beta</span>
+    </div>
+    <span>EN · USD</span>
+  </div>
+
+  <!-- PRIMARY NAV -->
+  <nav class="primary">
+    <div class="logo">QRYPT<sup>™ 01</sup></div>
+    <ul>
+      <li><a href="#hero" class="active">Index</a></li>
+      <li><a href="#templates">Templates</a></li>
+      <li><a href="#builder">Generator</a></li>
+      <li><a href="#identity">Identity</a></li>
+      <li><a href="#cv">CV Studio</a></li>
+      <li><a href="#pricing">Tiers</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#" class="sign-in">Sign In</a>
+      <a href="#" class="cta">Start Free</a>
+    </div>
+  </nav>
+
+  <!-- ========== SCREEN 01 — HERO ========== -->
+  <div class="page-label">
+    <span>SCREEN 01 — LANDING / INDEX</span>
+    <div class="dots">
+      <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <span>PUBLIC · NO AUTH REQUIRED</span>
+  </div>
+
+  <section class="screen" id="hero">
+    <div class="screen-tag"><b>§ 01</b>The Index Page</div>
+
+    <div class="hero">
+      <div class="hero-left">
+        <div class="eyebrow">A platform for everything scannable</div>
+        <h1>
+          One code,<br>
+          <span class="it">infinite</span> identities.
+          <span class="small">— for people, businesses & objects</span>
+        </h1>
+        <p class="lede">
+          QRYPT turns any moment into a scannable artefact. Your résumé, your business card, your menu, your Wi-Fi, your pet's collar — generate purposeful QR codes for the things that matter, and update them whenever life moves.
+        </p>
+        <div class="cta-row">
+          <a href="#builder" class="btn-pri">Generate For Free</a>
+          <a href="#pricing" class="btn-sec">View Tiers</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="num">22+</div><div class="label">Code Templates</div></div>
+          <div class="stat"><div class="num">∞</div><div class="label">Static Codes · Free Tier</div></div>
+          <div class="stat"><div class="num">42</div><div class="label">Languages Supported</div></div>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="deco">scan me.</div>
+        <div class="card-head">
+          <div class="ttl">Live Preview · vCard</div>
+          <div class="badge">Verified</div>
+        </div>
+        <div class="qr-mock">
+          <div class="qr-corner tl"></div>
+          <div class="qr-corner tr"></div>
+          <div class="qr-corner bl"></div>
+          <div class="qr-logo">Q</div>
+        </div>
+        <div class="meta">
+          <div><b>TYPE</b>Identity · Personal</div>
+          <div><b>SCANS</b>1,284 lifetime</div>
+          <div><b>EDITED</b>2 days ago</div>
+          <div><b>VALIDITY</b>Lifetime</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 02 — TEMPLATES ========== -->
+  <div class="page-label">
+    <span>SCREEN 02 — TEMPLATE LIBRARY</span>
+    <div class="dots">
+      <div class="dot"></div><div class="dot on"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <span>22 TEMPLATES · FILTERED BY TIER</span>
+  </div>
+
+  <section class="screen" id="templates">
+    <div class="screen-tag"><b>§ 02</b>Template Library</div>
+
+    <div class="uc-head">
+      <h2>A QR for <span class="it">every</span> intention.</h2>
+      <div class="uc-intro">
+        <span class="lbl">Research-backed use cases · 2026</span>
+        From the boardroom to the bookshelf — pick a template, fill in the details, and walk away with a code that does the work. Free tier covers the essentials; Pro and Atelier unlock dynamic codes, analytics, and team controls.
+      </div>
+    </div>
+
+    <div class="uc-grid">
+
+      <!-- Featured -->
+      <div class="uc-tile feature">
+        <div>
+          <div class="num">01 · Flagship</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+          <h3>Personal <span class="it">Identity</span><br>Cards</h3>
+          <p>Build a living digital ID page. Avatar, bio, socials, contact, downloadable vCard. Update once — the code stays the same.</p>
+        </div>
+        <div class="tier free">Free → Atelier</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">02</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="1"/><path d="M3 10h18M8 15h4"/></svg></div>
+          <h3>Business <span class="it">Card</span></h3>
+          <p>Replace paper. Logo, role, team, calendar link.</p>
+        </div>
+        <div class="tier free">Free</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">03</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4M8 12h8M8 16h6"/></svg></div>
+          <h3>Résumé / <span class="it">CV</span></h3>
+          <p>Link to a hosted CV page, or PDF download.</p>
+        </div>
+        <div class="tier free">Free</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">04</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 7h14v10H5z"/><circle cx="12" cy="12" r="3"/><path d="M2 9V7a2 2 0 0 1 2-2h2"/></svg></div>
+          <h3>Restaurant <span class="it">Menu</span></h3>
+          <p>Digital menu with allergens, photos & multi-language.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">05</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12 12 5l7 7"/><path d="M5 12v7h14v-7"/><path d="M9 19v-5h6v5"/></svg></div>
+          <h3>WiFi <span class="it">Access</span></h3>
+          <p>Auto-connect for guests. SSID + password embedded.</p>
+        </div>
+        <div class="tier free">Free</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">06</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16"/><path d="M9 4v16M15 4v16M4 9h16M4 15h16"/></svg></div>
+          <h3>Link <span class="it">Hub</span></h3>
+          <p>One scan → all your socials, portfolio, music, shop.</p>
+        </div>
+        <div class="tier free">Free</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">07</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="M3 9h18M7 14h3"/></svg></div>
+          <h3>Payment <span class="it">Code</span></h3>
+          <p>UPI · PayPal · bank · crypto · regional wallets.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">08</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="4"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/></svg></div>
+          <h3>Pet <span class="it">ID Tag</span></h3>
+          <p>Found pet? Scanner sees owner, meds, vet contact.</p>
+        </div>
+        <div class="tier free">Free</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">09</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
+          <h3>Medical <span class="it">Alert</span></h3>
+          <p>Blood type, allergies, emergency contacts.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">10</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 10h16M4 14h16"/><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M8 2v4M16 2v4"/></svg></div>
+          <h3>Event <span class="it">Ticket</span></h3>
+          <p>Time-bound, single-scan or recurring access.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">11</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M8 7V4h8v3"/><circle cx="12" cy="13" r="3"/></svg></div>
+          <h3>Product <span class="it">Passport</span></h3>
+          <p>Origin, authenticity, sustainability, manuals.</p>
+        </div>
+        <div class="tier elite">Atelier</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">12</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 9 12 3l9 6v12H3z"/><path d="M9 21v-7h6v7"/></svg></div>
+          <h3>Property <span class="it">Listing</span></h3>
+          <p>Real-estate signs, virtual tours, agent contact.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">13</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>Attendance / <span class="it">Check-In</span></h3>
+          <p>Class, gym, office — timestamped, geo-aware.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">14</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 7v10l8 4 8-4V7l-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></div>
+          <h3>Loyalty / <span class="it">Punch Card</span></h3>
+          <p>Digital stamps. Redeem rewards. Track customers.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">15</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+          <h3>Document <span class="it">Vault</span></h3>
+          <p>Signed PDFs, certificates, invoices behind a scan.</p>
+        </div>
+        <div class="tier elite">Atelier</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">16</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h12"/></svg></div>
+          <h3>Feedback <span class="it">Form</span></h3>
+          <p>Reviews, NPS, surveys — quick anonymous capture.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">17</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
+          <h3>Smart <span class="it">Sticker</span></h3>
+          <p>Bin labels, asset tags, IoT pairing, NFC fallback.</p>
+        </div>
+        <div class="tier elite">Atelier</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">18</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16"/><circle cx="12" cy="12" r="3"/><path d="M3 8h18"/></svg></div>
+          <h3>Gallery / <span class="it">Portfolio</span></h3>
+          <p>Photographers, artists, designers — visual landings.</p>
+        </div>
+        <div class="tier free">Free</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">19</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 16V8h6l6-3v14l-6-3H4z"/></svg></div>
+          <h3>Audio / <span class="it">Memoir</span></h3>
+          <p>Voice notes, tributes, museum labels, songs.</p>
+        </div>
+        <div class="tier pro">Starter+</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">20</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 5h14v6H5zM5 13h14v6H5z"/></svg></div>
+          <h3>Bulk / <span class="it">Batch Codes</span></h3>
+          <p>Generate 100s at once — invoices, parcels, seats.</p>
+        </div>
+        <div class="tier elite">Atelier</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">21</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-5 4"/></svg></div>
+          <h3>Custom <span class="it">Action</span></h3>
+          <p>API endpoint, app deep-link, IoT trigger. Build it.</p>
+        </div>
+        <div class="tier elite">Atelier</div>
+      </div>
+
+      <div class="uc-tile">
+        <div>
+          <div class="num">22</div>
+          <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+          <h3>Multi-link / <span class="it">Geo</span></h3>
+          <p>Same code, different destinations by location.</p>
+        </div>
+        <div class="tier elite">Atelier</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 03 — BUILDER ========== -->
+  <div class="page-label">
+    <span>SCREEN 03 — GENERATOR / BUILDER</span>
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot on"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <span>NO LOGIN · STATIC CODE OUTPUT</span>
+  </div>
+
+  <section class="screen" id="builder">
+    <div class="screen-tag"><b>§ 03</b>The Builder</div>
+
+    <div class="uc-head">
+      <h2>Tell us <span class="it">what</span><br>it should do.</h2>
+      <div class="uc-intro">
+        <span class="lbl">Three-pane workspace · always live</span>
+        Pick a type from the rail, fill the details in the centre, watch the code come together on the right. Anonymous users get static codes and PNG. Logged-in users unlock dynamic editing, SVG, EPS and analytics.
+      </div>
+    </div>
+
+    <div class="builder">
+      <!-- Left side: type selector -->
+      <aside class="builder-side">
+        <div class="side-ttl">QR Type</div>
+        <ul>
+          <li>Plain URL <span class="lock">FREE</span></li>
+          <li>Personal vCard <span class="lock">FREE</span></li>
+          <li class="on">Identity Page <span class="lock">FREE</span></li>
+          <li>Résumé / CV <span class="lock">FREE</span></li>
+          <li>Business Card <span class="lock">FREE</span></li>
+          <li>WiFi <span class="lock">FREE</span></li>
+          <li>Menu <span class="lock">STARTER</span></li>
+          <li>Payment <span class="lock">STARTER</span></li>
+          <li>Event Ticket <span class="lock">STARTER</span></li>
+          <li>Pet Tag <span class="lock">FREE</span></li>
+          <li>Property <span class="lock">STARTER</span></li>
+          <li>Loyalty <span class="lock">STARTER</span></li>
+          <li>Bulk Codes <span class="lock">ATELIER</span></li>
+          <li>Geo / Multi <span class="lock">ATELIER</span></li>
+        </ul>
+      </aside>
+
+      <!-- Middle: form -->
+      <div class="builder-main">
+        <div class="crumb">Templates › Identity › Personal Identity Page</div>
+        <h2>Identity <span class="it">page</span></h2>
+        <p class="sub">A hosted profile behind your code. Edit it any time without reprinting.</p>
+
+        <div class="form-stack">
+          <div class="field-row">
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" placeholder="e.g. Adelaide Marlow">
+            </div>
+            <div class="field">
+              <label>Display Title</label>
+              <input type="text" placeholder="e.g. Editorial Designer">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Short Bio · 240 chars</label>
+            <textarea rows="2" style="border:none; border-bottom:1.5px solid var(--ink); font-family:var(--serif); font-size:16px; resize:none; padding:10px 0;" placeholder="The story behind the scan."></textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>Email</label>
+              <div class="input-mock">hello@example.com</div>
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <div class="input-mock">+1 · 555 · 0184</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Avatar / Photo</label>
+            <div class="upload-zone">
+              <div class="uz-l">Drop or upload <span>PNG, JPG · max 5 MB · square recommended</span></div>
+              <div class="uz-btn">Browse</div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Linked Profiles · up to 8</label>
+            <div class="input-mock" style="display:flex; gap:8px; flex-wrap:wrap;">
+              <span style="border:1px solid var(--ink); padding:4px 10px; color:var(--ink); font-family:var(--mono); font-size:11px; letter-spacing:0.1em;">LinkedIn</span>
+              <span style="border:1px solid var(--ink); padding:4px 10px; color:var(--ink); font-family:var(--mono); font-size:11px; letter-spacing:0.1em;">GitHub</span>
+              <span style="border:1px solid var(--ink); padding:4px 10px; color:var(--ink); font-family:var(--mono); font-size:11px; letter-spacing:0.1em;">Portfolio</span>
+              <span style="border:1px dashed var(--ink-mute); padding:4px 10px; color:var(--ink-mute); font-family:var(--mono); font-size:11px; letter-spacing:0.1em;">+ Add</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Code Style</label>
+            <div class="style-row">
+              <div class="swatch on"><div class="qr-square"></div></div>
+              <div class="swatch"><div class="qr-mini"></div></div>
+              <div class="swatch"><div class="qr-dot"></div></div>
+              <div class="swatch"><div class="qr-rd"></div></div>
+              <div class="swatch locked"><div class="qr-square"></div></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Foreground · Background</label>
+            <div class="color-row">
+              <div class="c on" style="background: var(--ink);"></div>
+              <div class="c" style="background: var(--accent);"></div>
+              <div class="c" style="background: var(--accent-2);"></div>
+              <div class="c" style="background: var(--gold);"></div>
+              <div class="c" style="background: #1a3a8a;"></div>
+              <div class="c" style="background: var(--paper); border-style: dashed;"></div>
+              <span style="font-family:var(--mono); font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-mute); margin-left:8px;">Pro · custom HEX</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: live preview & actions -->
+      <aside class="builder-prev">
+        <div class="prev-ttl">
+          <span>Live Output</span>
+          <span class="live">Updating</span>
+        </div>
+        <div class="prev-qr">
+          <div class="qr-corner tl"></div>
+          <div class="qr-corner tr"></div>
+          <div class="qr-corner bl"></div>
+          <div class="qr-logo" style="background: var(--paper);">Q</div>
+        </div>
+        <div class="prev-info">
+          <div><b>Type</b> Identity</div>
+          <div><b>Mode</b> Static</div>
+          <div><b>Validity</b> Lifetime</div>
+          <div><b>Hosted at</b> qrypt.io/u/...</div>
+        </div>
+        <div class="prev-actions">
+          <a class="a-pri">Download Free</a>
+          <a class="a-sec">Sign in to make dynamic</a>
+          <div class="fmt">
+            <span class="on">PNG</span>
+            <span>JPG</span>
+            <span>SVG ★</span>
+            <span>PDF ★</span>
+            <span>EPS ★</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 04 — IDENTITY DETAIL ========== -->
+  <div class="page-label">
+    <span>SCREEN 04 — IDENTITY PROFILE (the hosted page behind a scan)</span>
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <span>PUBLIC URL · qrypt.io/u/{slug}</span>
+  </div>
+
+  <section class="screen" id="identity">
+    <div class="screen-tag"><b>§ 04</b>Identity Profile</div>
+
+    <div class="identity-frame">
+      <div class="identity-card">
+        <div class="ic-head">
+          <div class="ic-logo">QRYPT<sup>™</sup></div>
+          <div class="ic-verified">✓ Verified</div>
+        </div>
+        <div class="ic-avatar"></div>
+        <div class="ic-name">Adelaide <span class="it">Marlow</span></div>
+        <div class="ic-role">Editorial Designer · Type</div>
+        <div class="ic-qr">
+          <div class="qr-corner tl" style="background:var(--paper); width:26px; height:26px; border-width:3px; top:8px; left:8px;"></div>
+          <div class="qr-corner tr" style="background:var(--paper); width:26px; height:26px; border-width:3px; top:8px; right:8px;"></div>
+          <div class="qr-corner bl" style="background:var(--paper); width:26px; height:26px; border-width:3px; bottom:8px; left:8px;"></div>
+        </div>
+        <div class="ic-foot">
+          <span>ID · #A4-2901</span>
+          <span>Issued · 2026</span>
+        </div>
+      </div>
+
+      <div class="identity-info">
+        <h2>The page <span class="it">behind</span> your code.</h2>
+        <p class="ii-lede">
+          Every Identity QR points to a hosted, editable profile page. Update your number, add a new portfolio, change your job — the code never changes. Scanners always see the latest version.
+        </p>
+
+        <div class="ii-list">
+          <div class="row">
+            <div class="k">Display Name</div>
+            <div class="v">Adelaide Marlow</div>
+          </div>
+          <div class="row">
+            <div class="k">Pronouns</div>
+            <div class="v it">she / her</div>
+          </div>
+          <div class="row">
+            <div class="k">Title</div>
+            <div class="v">Editorial Designer</div>
+          </div>
+          <div class="row">
+            <div class="k">Location</div>
+            <div class="v">Lisbon · Portugal</div>
+          </div>
+          <div class="row">
+            <div class="k">Email</div>
+            <div class="v">hello@adelaide.co</div>
+          </div>
+          <div class="row">
+            <div class="k">Phone</div>
+            <div class="v">+351 · 21 · 0188</div>
+          </div>
+          <div class="row">
+            <div class="k">Linked Profiles</div>
+            <div class="v">LinkedIn · Behance · Dribbble · GitHub</div>
+          </div>
+          <div class="row">
+            <div class="k">Code Validity</div>
+            <div class="v it">lifetime</div>
+          </div>
+          <div class="row" style="grid-column: span 2;">
+            <div class="k">Available Actions for Visitor</div>
+            <div class="v">Save Contact (vCard) · Email · Call · WhatsApp · Share Profile · Download Résumé</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 05 — CV STUDIO ========== -->
+  <div class="page-label">
+    <span>SCREEN 05 — CV STUDIO</span>
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot on"></div><div class="dot"></div>
+    </div>
+    <span>AUTH OPTIONAL · DYNAMIC LINK FOR LOGGED-IN USERS</span>
+  </div>
+
+  <section class="screen" id="cv">
+    <div class="screen-tag"><b>§ 05</b>CV / Résumé Studio</div>
+
+    <div class="cv-frame">
+      <div class="cv-side">
+        <h2>The <span class="it">résumé</span><br>that updates itself.</h2>
+        <p>
+          Build once. Edit anywhere. The QR on your printed CV always points to the latest version — no more "this is an old draft, sorry."
+        </p>
+
+        <div class="cv-templates">
+          <div class="tmp on">
+            <div class="ln t"></div>
+            <div class="ln s"></div>
+            <div class="row2">
+              <div class="blk"></div>
+              <div class="col">
+                <div class="ln full"></div><div class="ln full"></div><div class="ln medium"></div>
+              </div>
+            </div>
+            <div class="ln s" style="margin-top:8px;"></div>
+            <div class="ln full"></div>
+            <div class="ln medium"></div>
+            <div class="tmp-name"><b>Editorial</b> · default</div>
+          </div>
+
+          <div class="tmp">
+            <div class="ln t" style="background: var(--accent);"></div>
+            <div class="ln s"></div>
+            <div class="ln full" style="margin-top:8px;"></div>
+            <div class="ln full"></div>
+            <div class="ln medium"></div>
+            <div class="ln full"></div>
+            <div class="ln medium"></div>
+            <div class="ln s"></div>
+            <div class="tmp-name"><b>Modern</b> · free</div>
+          </div>
+
+          <div class="tmp locked">
+            <div class="row2">
+              <div class="col">
+                <div class="blk" style="aspect-ratio: 1; margin-bottom:6px;"></div>
+                <div class="ln full"></div><div class="ln medium"></div>
+                <div class="ln full" style="margin-top:6px;"></div>
+              </div>
+              <div class="col">
+                <div class="ln t" style="height:6px;"></div>
+                <div class="ln s"></div>
+                <div class="ln full" style="margin-top:6px;"></div>
+                <div class="ln full"></div>
+                <div class="ln medium"></div>
+              </div>
+            </div>
+            <div class="tmp-name"><b>Atelier</b> · two-col</div>
+          </div>
+        </div>
+
+        <div style="margin-top:48px; display:flex; gap:16px; align-items:center;">
+          <a class="btn-pri" style="background:var(--ink);">Start CV Builder</a>
+          <span style="font-family:var(--mono); font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-mute);">12 templates · 4 free</span>
+        </div>
+
+        <div style="margin-top:48px; padding-top:32px; border-top:1px solid var(--rule);">
+          <h5 style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-mute); margin-bottom:16px;">What's included</h5>
+          <ul style="list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:8px 24px;">
+            <li style="font-size:14px;">— AI summary writer</li>
+            <li style="font-size:14px;">— Auto-format for ATS</li>
+            <li style="font-size:14px;">— PDF · DOCX · Web</li>
+            <li style="font-size:14px;">— Multi-language</li>
+            <li style="font-size:14px;">— Version history (Pro)</li>
+            <li style="font-size:14px;">— Recruiter view tracking (Pro)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CV mockup document -->
+      <div class="cv-doc">
+        <div class="cv-head">
+          <div>
+            <h3>Adelaide <span class="it">Marlow</span></h3>
+            <div class="role">Editorial Designer · Type / Brand</div>
+          </div>
+          <div class="qr-mini-doc"></div>
+        </div>
+
+        <div class="cv-body">
+          <div class="cv-left">
+            <div class="cv-sec">
+              <h4>Contact</h4>
+              <p>hello@adelaide.co</p>
+              <p>+351 21 0188</p>
+              <p>Lisbon, PT</p>
+            </div>
+            <div class="cv-sec">
+              <h4>Skills</h4>
+              <div class="ln-mock"></div>
+              <div class="ln-mock short"></div>
+              <div class="ln-mock medium"></div>
+              <div class="ln-mock"></div>
+            </div>
+            <div class="cv-sec">
+              <h4>Education</h4>
+              <p style="font-weight:500;">MA Design</p>
+              <p style="font-style:italic; color:var(--ink-mute);">RCA · London · 2018</p>
+            </div>
+            <div class="cv-sec">
+              <h4>Languages</h4>
+              <div class="ln-mock medium"></div>
+              <div class="ln-mock short"></div>
+            </div>
+          </div>
+
+          <div class="cv-right">
+            <div class="cv-sec">
+              <h4>Summary</h4>
+              <div class="ln-mock"></div>
+              <div class="ln-mock"></div>
+              <div class="ln-mock medium"></div>
+            </div>
+            <div class="cv-sec">
+              <h4>Experience</h4>
+              <div class="cv-job">
+                <div class="j-h"><span>Senior Designer</span><span class="yr">2022 — Now</span></div>
+                <div class="j-c">Casa Editorial · Lisbon</div>
+                <div class="ln-mock"></div>
+                <div class="ln-mock medium"></div>
+              </div>
+              <div class="cv-job">
+                <div class="j-h"><span>Designer</span><span class="yr">2019 — 2022</span></div>
+                <div class="j-c">Atelier Plana · Porto</div>
+                <div class="ln-mock"></div>
+                <div class="ln-mock short"></div>
+              </div>
+              <div class="cv-job">
+                <div class="j-h"><span>Junior Designer</span><span class="yr">2018 — 2019</span></div>
+                <div class="j-c">Studio Pamphlet · London</div>
+                <div class="ln-mock medium"></div>
+              </div>
+            </div>
+            <div class="cv-sec">
+              <h4>Selected Projects</h4>
+              <div class="ln-mock"></div>
+              <div class="ln-mock short"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 06 — PRICING ========== -->
+  <div class="page-label">
+    <span>SCREEN 06 — TIERS &amp; PRICING</span>
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot on"></div>
+    </div>
+    <span>3 PAID TIERS + GUEST + FREE LOGIN</span>
+  </div>
+
+  <section class="screen" id="pricing">
+    <div class="screen-tag"><b>§ 06</b>Pricing Tiers</div>
+
+    <div class="pricing-head">
+      <div class="eyebrow">Five tiers · no surprises</div>
+      <h2>Pay for <span class="it">power,</span><br>not for paper.</h2>
+      <p>Generate without signing in. Make an account for dynamic codes. Subscribe when you need volume, validity, or analytics.</p>
+    </div>
+
+    <div class="billing-toggle">
+      <div class="tg">
+        <span>Monthly</span>
+        <span class="on">Annual</span>
+      </div>
+      <span class="save">save up to 32%</span>
+    </div>
+
+    <div class="price-grid">
+
+      <!-- GUEST -->
+      <div class="price-tier">
+        <div class="pt-name">Guest</div>
+        <div class="pt-desc">For one-off codes. No account, no email, no fuss.</div>
+        <div class="pt-price"><span class="amount">0</span><span class="curr">free</span></div>
+        <div class="pt-period">No login required</div>
+        <div class="pt-validity">Validity · forever (static codes)</div>
+        <ul class="feat-list">
+          <li>Up to <b>3 codes per session</b></li>
+          <li>Static codes only</li>
+          <li>6 basic templates</li>
+          <li>PNG download · 600px</li>
+          <li class="no">No analytics</li>
+          <li class="no">No editing after generation</li>
+          <li class="no">No custom colours / logo</li>
+        </ul>
+        <a class="pt-cta">Generate Now</a>
+      </div>
+
+      <!-- FREE -->
+      <div class="price-tier">
+        <div class="pt-name">Free <span class="it">Account</span></div>
+        <div class="pt-desc">Personal use. Save codes, edit them, basic dynamic links.</div>
+        <div class="pt-price"><span class="amount">0</span><span class="curr">free</span></div>
+        <div class="pt-period">Per month · forever</div>
+        <div class="pt-validity">Validity · 12 months per dynamic code</div>
+        <ul class="feat-list">
+          <li>Up to <b>10 saved codes</b></li>
+          <li><b>2 dynamic codes</b> · editable</li>
+          <li>All free templates (12)</li>
+          <li>PNG · JPG · SVG download</li>
+          <li>Basic scan analytics · 30 days</li>
+          <li>1 Identity Page + 1 CV</li>
+          <li class="no">No custom branding</li>
+        </ul>
+        <a class="pt-cta">Create Account</a>
+      </div>
+
+      <!-- STARTER -->
+      <div class="price-tier">
+        <span class="pt-tag">Popular</span>
+        <div class="pt-name">Starter</div>
+        <div class="pt-desc">For creators, freelancers, side projects. Everything dynamic.</div>
+        <div class="pt-price"><span class="amount">6</span><span class="curr">/mo</span></div>
+        <div class="pt-period">Billed annually · $72/yr</div>
+        <div class="pt-validity">Validity · 3 years per code</div>
+        <ul class="feat-list">
+          <li>Up to <b>50 codes</b> · all dynamic</li>
+          <li>All 22 templates unlocked</li>
+          <li>PDF · EPS · vector exports</li>
+          <li>Logo + custom colours</li>
+          <li>Scan analytics · 12 months</li>
+          <li>Geo & device breakdowns</li>
+          <li>3 CV templates · ATS check</li>
+          <li>Custom domain redirect</li>
+        </ul>
+        <a class="pt-cta">Start Starter</a>
+      </div>
+
+      <!-- PROFESSIONAL (featured) -->
+      <div class="price-tier featured">
+        <span class="pt-tag">Recommended</span>
+        <div class="pt-name">Professional</div>
+        <div class="pt-desc">Small businesses & teams. Unlimited generation with team controls.</div>
+        <div class="pt-price"><span class="amount">19</span><span class="curr">/mo</span></div>
+        <div class="pt-period">Billed annually · $228/yr</div>
+        <div class="pt-validity">Validity · lifetime, codes never expire</div>
+        <ul class="feat-list">
+          <li><b>Unlimited dynamic codes</b></li>
+          <li>Up to <b>5 team seats</b></li>
+          <li>All templates + bulk generation</li>
+          <li>API access · 5,000 calls/mo</li>
+          <li>White-label landing pages</li>
+          <li>Full analytics + CSV export</li>
+          <li>All 12 CV templates</li>
+          <li>Password-protected codes</li>
+          <li>Priority support · 24h SLA</li>
+        </ul>
+        <a class="pt-cta">Go Professional</a>
+      </div>
+
+    </div>
+
+    <!-- Atelier (full-width fourth tier) -->
+    <div style="border:1.5px solid var(--line); border-top:none; padding: 32px 28px; background: var(--paper-2); display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: center;">
+      <div>
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px;">Custom · Atelier Tier</div>
+        <h3 style="font-family: var(--serif); font-size: 36px; font-weight: 500; letter-spacing: -0.02em;">Atelier <span style="font-family: var(--serif-italic); font-style: italic;">Enterprise</span></h3>
+        <p style="color: var(--ink-mute); font-size: 14px; margin-top: 8px;">For organisations doing it at scale — events, hospitality, retail, education.</p>
+      </div>
+      <ul style="list-style: none; columns: 2; column-gap: 32px;">
+        <li style="font-size: 13px; padding: 4px 0;">— Unlimited seats</li>
+        <li style="font-size: 13px; padding: 4px 0;">— SSO / SAML</li>
+        <li style="font-size: 13px; padding: 4px 0;">— Dedicated CSM</li>
+        <li style="font-size: 13px; padding: 4px 0;">— On-prem option</li>
+        <li style="font-size: 13px; padding: 4px 0;">— Custom SLA · 4h</li>
+        <li style="font-size: 13px; padding: 4px 0;">— Audit logs · SOC2</li>
+        <li style="font-size: 13px; padding: 4px 0;">— Unlimited API</li>
+        <li style="font-size: 13px; padding: 4px 0;">— Custom integrations</li>
+      </ul>
+      <div style="text-align: right;">
+        <div style="font-family: var(--serif); font-size: 32px; font-weight: 500; font-variation-settings: 'SOFT' 100, 'WONK' 1;">Talk to us</div>
+        <a class="btn-pri" style="margin-top:12px;">Book a Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SCREEN 07 — DASHBOARD ========== -->
+  <div class="page-label">
+    <span>SCREEN 07 — ACCOUNT DASHBOARD (post-login)</span>
+    <div class="dots">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot on" style="background:var(--accent);"></div>
+    </div>
+    <span>AUTHENTICATED · STARTER PLAN PREVIEW</span>
+  </div>
+
+  <section class="screen" id="dashboard" style="background: var(--paper-2);">
+    <div class="screen-tag"><b>§ 07</b>Dashboard</div>
+
+    <div class="uc-head" style="margin-bottom: 32px;">
+      <h2>Your <span class="it">codes,</span> at a glance.</h2>
+      <div class="uc-intro">
+        <span class="lbl">After login · Starter tier example</span>
+        Every code you've created, with live scan counts, edit access, and analytics. Pin frequent ones, archive expired ones, replace destinations in two clicks.
+      </div>
+    </div>
+
+    <div class="dash-frame">
+      <div class="dash-top">
+        <div class="dh-ttl">Hello, <span class="it">Adelaide</span> — you have 14 active codes.</div>
+        <div class="dh-search"><span>Search codes, labels, URLs…</span><span>⌘ K</span></div>
+        <a class="dh-new">+ New Code</a>
+      </div>
+
+      <div class="dash-metrics">
+        <div class="m">
+          <div class="lbl">Total Scans · 30d</div>
+          <div class="val">8,412</div>
+          <div class="delta">↗ +12.4% vs last 30d</div>
+        </div>
+        <div class="m">
+          <div class="lbl">Active Codes</div>
+          <div class="val">14<span style="font-family:var(--serif-italic); font-style:italic; font-size:20px; color:var(--ink-mute); margin-left:6px;">of 50</span></div>
+          <div class="delta">↗ 3 added this week</div>
+        </div>
+        <div class="m">
+          <div class="lbl">Top Country</div>
+          <div class="val" style="font-size:32px;">Portugal</div>
+          <div class="delta">42% of scans</div>
+        </div>
+        <div class="m">
+          <div class="lbl">Plan</div>
+          <div class="val" style="font-size:32px;">Starter</div>
+          <div class="delta dn">Upgrade unlocks unlimited</div>
+        </div>
+      </div>
+
+      <div class="dash-body">
+        <!-- Codes table -->
+        <div class="dash-table-wrap">
+          <h3>Your Codes <span class="all">View All →</span></h3>
+          <table class="dash-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Type</th>
+                <th>Created</th>
+                <th>Scans</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="qr-thumb"></span>My Identity Card</td>
+                <td><span class="type-pill">Identity</span></td>
+                <td>2 days ago</td>
+                <td class="scans">3,128</td>
+                <td><span class="status live">Live</span></td>
+                <td style="text-align:right; font-family:var(--mono); font-size:11px; color:var(--ink-mute);">···</td>
+              </tr>
+              <tr>
+                <td><span class="qr-thumb"></span>Studio Menu — Spring</td>
+                <td><span class="type-pill">Menu</span></td>
+                <td>1 week ago</td>
+                <td class="scans">2,041</td>
+                <td><span class="status live">Live</span></td>
+                <td style="text-align:right; font-family:var(--mono); font-size:11px; color:var(--ink-mute);">···</td>
+              </tr>
+              <tr>
+                <td><span class="qr-thumb"></span>Résumé · 2026 v3</td>
+                <td><span class="type-pill">CV</span></td>
+                <td>3 weeks ago</td>
+                <td class="scans">412</td>
+                <td><span class="status live">Live</span></td>
+                <td style="text-align:right; font-family:var(--mono); font-size:11px; color:var(--ink-mute);">···</td>
+              </tr>
+              <tr>
+                <td><span class="qr-thumb"></span>WiFi · Studio Guest</td>
+                <td><span class="type-pill">WiFi</span></td>
+                <td>2 months ago</td>
+                <td class="scans">1,892</td>
+                <td><span class="status live">Live</span></td>
+                <td style="text-align:right; font-family:var(--mono); font-size:11px; color:var(--ink-mute);">···</td>
+              </tr>
+              <tr>
+                <td><span class="qr-thumb"></span>Café Loyalty · Punch</td>
+                <td><span class="type-pill">Loyalty</span></td>
+                <td>2 months ago</td>
+                <td class="scans">734</td>
+                <td><span class="status live">Live</span></td>
+                <td style="text-align:right; font-family:var(--mono); font-size:11px; color:var(--ink-mute);">···</td>
+              </tr>
+              <tr style="opacity:0.5;">
+                <td><span class="qr-thumb"></span>Event · Spring Launch</td>
+                <td><span class="type-pill">Event</span></td>
+                <td>4 months ago</td>
+                <td class="scans">205</td>
+                <td><span class="status exp">Expired</span></td>
+                <td style="text-align:right; font-family:var(--mono); font-size:11px; color:var(--ink-mute);">···</td>
+              </tr>
+              <tr style="opacity:0.6;">
+                <td><span class="qr-thumb"></span>Portfolio · Draft</td>
+                <td><span class="type-pill">Gallery</span></td>
+                <td>5 days ago</td>
+                <td class="scans">—</td>
+                <td><span class="status draft">Draft</span></td>
+                <td style="text-align:right; font-family:var(--mono); font-size:11px; color:var(--ink-mute);">···</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Side: chart + geography -->
+        <div class="dash-side">
+          <h3>Scan Activity · 30d</h3>
+          <div class="scan-chart">
+            <div class="bar" style="height: 22%;"></div>
+            <div class="bar" style="height: 38%;"></div>
+            <div class="bar" style="height: 30%;"></div>
+            <div class="bar" style="height: 52%;"></div>
+            <div class="bar" style="height: 45%;"></div>
+            <div class="bar" style="height: 68%;"></div>
+            <div class="bar" style="height: 60%;"></div>
+            <div class="bar" style="height: 74%;"></div>
+            <div class="bar" style="height: 58%;"></div>
+            <div class="bar" style="height: 82%;"></div>
+            <div class="bar" style="height: 70%;"></div>
+            <div class="bar" style="height: 92%;"></div>
+            <div class="bar" style="height: 88%;"></div>
+            <div class="bar" style="height: 76%;"></div>
+            <div class="bar" style="height: 100%; background: var(--accent);"></div>
+          </div>
+          <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; color: var(--ink-mute); margin-bottom: 32px; display:flex; justify-content:space-between;">
+            <span>APR 20</span><span>MAY 20</span>
+          </div>
+
+          <h3>Top Geographies</h3>
+          <ul class="geo-list">
+            <li><span>Portugal</span><span class="geo-bar" style="--w: 82%;"></span><span class="pct">42%</span></li>
+            <li><span>Spain</span><span class="geo-bar" style="--w: 56%;"></span><span class="pct">28%</span></li>
+            <li><span>United Kingdom</span><span class="geo-bar" style="--w: 32%;"></span><span class="pct">14%</span></li>
+            <li><span>Germany</span><span class="geo-bar" style="--w: 22%;"></span><span class="pct">9%</span></li>
+            <li><span>Other · 24</span><span class="geo-bar" style="--w: 12%;"></span><span class="pct">7%</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <div class="ft-mark">
+      QRYPT<span class="it">.</span>
+    </div>
+
+    <div class="ft-grid">
+      <div>
+        <p class="ft-tagline">"The most ordinary objects deserve extraordinary handshakes."</p>
+        <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(243,239,231,0.5);">— Manifesto · QRYPT 2026</p>
+      </div>
+      <div>
+        <h5>Product</h5>
+        <ul>
+          <li><a>Generator</a></li>
+          <li><a>Templates</a></li>
+          <li><a>CV Studio</a></li>
+          <li><a>Identity</a></li>
+          <li><a>API</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Plans</h5>
+        <ul>
+          <li><a>Guest</a></li>
+          <li><a>Free Account</a></li>
+          <li><a>Starter</a></li>
+          <li><a>Professional</a></li>
+          <li><a>Atelier</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a>Documentation</a></li>
+          <li><a>Use Cases</a></li>
+          <li><a>Brand Kit</a></li>
+          <li><a>Changelog</a></li>
+          <li><a>Status</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a>Manifesto</a></li>
+          <li><a>Privacy</a></li>
+          <li><a>Terms</a></li>
+          <li><a>Contact</a></li>
+          <li><a>Press Kit</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ft-bottom">
+      <span>© 2026 QRYPT · A wireframe concept</span>
+      <span>Lisbon · Singapore · Brooklyn</span>
+      <span>v0.1 · iteration 04</span>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>

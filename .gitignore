@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Environment (NEVER commit these)
+.env.local
+.env.*.local
+.env
+
+# Drizzle migrations (generated)
+drizzle/
+
+# Build
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/settings.json
+.idea/
+
+# Keep prototypes
+!prototypes/
